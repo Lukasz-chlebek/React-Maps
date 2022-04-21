@@ -1,3 +1,9 @@
-#map {
-    height: 180px;
+.container{
+    margin: auto;
+    width: 300px;
+    height: 500px;
+    padding: 10px;
+    color: bisque;
+    background-color: bisque;
+    box-shadow: 8px 8px 31px -11px rgba(66, 68, 90, 1);
 }

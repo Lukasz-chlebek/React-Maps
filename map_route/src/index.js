@@ -2,11 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from "./MainPage";
+import MapPage from "./MapPage";
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <MainPage/>
+      <BrowserRouter>
+          <Routes>
+              <Route path={"/"} element={<MainPage/>} exact/>
+              <Route path={"/Map"} element={<MapPage/>} exact/>
+          </Routes>
+      </BrowserRouter>
+
   </React.StrictMode>
 );
 

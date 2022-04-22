@@ -1,19 +1,20 @@
 import "./MainPage.css"
-import { useForm } from 'react-hook-form';
 import { useState} from "react";
+import {Link} from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import axios from "axios";
-import Map from "./Map"
-import { Link } from 'react-router-dom';
-import MapPage from "./MapPage";
+import TileHistory from "./TileHistory";
+import {DataHistory} from "./DataHistory";
 
 function MainPage(){
-    const [pointA, setPointA] = useState()
-    const [pointB, setPointB] = useState()
     const [clicked, setClicked]= useState(false)
-    const [Coords, setCoords]=useState({})
     let Coordinates = {
-        pointACoord: '49.60982,19.95269',
-        pointBCoord: '54.35311,18.65105'
+        addressA:'',
+        addressB:'',
+        pointACoord: '',
+        pointBCoord: '',
+        idA:'',
+        idB:''
     }
     const {
         register,
@@ -28,42 +29,47 @@ function MainPage(){
         //urls
         let origin = `https://geocode.search.hereapi.com/v1/geocode?q=${Dataset.point_a}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
         let destination = `https://geocode.search.hereapi.com/v1/geocode?q=${Dataset.point_b}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
-
          axios.all([origin, destination].map(async (urls)=> await axios.get(urls)))
             .then(axios.spread((...responses) =>{
-
-                setPointA(responses[0])
-                setPointB(responses[1])
-                Coordinates.pointACoord=pointA.data.items[0].position.lat+","+pointA.data.items[0].position.lng
-                Coordinates.pointBCoord=pointB.data.items[0].position.lat+","+pointB.data.items[0].position.lng
-                setCoords(Coordinates)
+                Coordinates.idA=responses[0].data.items[0].id
+                Coordinates.idB=responses[1].data.items[0].id
+                Coordinates.addressA=responses[0].data.items[0].title
+                Coordinates.addressB=responses[1].data.items[0].title
+                Coordinates.pointACoord=responses[0].data.items[0].position.lat+","+responses[0].data.items[0].position.lng
+                Coordinates.pointBCoord=responses[1].data.items[0].position.lat+","+responses[1].data.items[0].position.lng
+                DataHistory.push(Coordinates)
                 setClicked(true)
-            }))
-            .catch(err=>{
+            })).catch(err=>{
                 console.log(err)
-            })
-    }
-    let map;
-    if(clicked){
-        map = <Map coord={Coords} />
-    }else{
-        map =<div/>
-    }
-    console.log(Coords)
-    return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input placeholder={"Punkt A"} {...register('point_a', { required: true })}  />
-                {errors.point_a && <p>Last name is required.</p>}
-                <input placeholder={"Punkt B"} {...register('point_b', { required: true })}  />
-                {errors.point_b && <p>Last name is required.</p>}
-                <input type="submit" />
-            </form>
-            <div>
-                {map}
-            </div>
+         })
 
+
+    }
+    let button;
+    if(DataHistory.length!==0 && clicked){
+        button= <Link to={"Map"} state={{idOfTile:DataHistory[DataHistory.length-1].idA+DataHistory[DataHistory.length-1].idB}}>
+                    <input type="submit" className={"button"} value={"Find route"}/>
+                </Link>
+    }else{
+        button=<input type="submit" className={"button"} value={"Find route"}/>
+    }
+    return (
+        <div className={"mainContainer"}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <input placeholder={"Point A"} {...register('point_a', { required: true })}  className={"input"}/>
+                {errors.point_a && <p className={"alert"}>Point A is required</p>}
+                <input placeholder={"Point B"} {...register('point_b', { required: true })}  className={"input"}/>
+                {errors.point_b && <p className={"alert point-b"}>Point B is required</p>}
+                {button}
+            </form>
+            <p className={"title"}>Route history</p>
+            {
+                DataHistory.map(tile =>{
+                    return <TileHistory key={tile.idA + tile.idB} props={tile} />
+                })
+            }
         </div>
+
 
     )
 }

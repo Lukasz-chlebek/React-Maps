@@ -1,0 +1,29 @@
+.container{
+    width: 400px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    flex-direction: row;
+    margin: 10px 0 ;
+}
+
+.arrow{
+    align-self: center;
+}
+
+.pointRight{
+    margin: 16px 10px 16px 20px;
+    align-self: center;
+    color: black;
+    width: 150px;
+}
+
+.pointLeft{
+    align-self: center;
+    color: black;
+    width: 150px;
+    margin: 16px 10px;
+}

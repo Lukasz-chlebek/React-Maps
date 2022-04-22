@@ -6,19 +6,22 @@ import Map from "./Map";
 import {useRef, useState} from "react";
 import KmComponent from "./KmComponent";
 import "./Range.css"
-import ReactToPrint, {useReactToPrint} from "react-to-print";
+import {useReactToPrint} from "react-to-print";
+
 
 
 function MapPage(){
     const [rangeval, setRangeval] = useState(null);
     const location = useLocation()
-    const componentRef = useRef()
+    const componentRef = useRef(null)
     const handlePrint = useReactToPrint({
-        content: () =>componentRef.current
+        content:() => componentRef.current
     })
     return(
-        <div className={"container-xxl"} ref={componentRef}>
-            <KmComponent props={{data:DataHistory.find(x=> x.idA+x.idB === location.state.idOfTile), rate: rangeval}}/>
+        <div className={"container-xxl"} >
+            <div ref={componentRef} >
+                <KmComponent props={{data:DataHistory.find(x=> x.idA+x.idB === location.state.idOfTile), rate: rangeval}} />
+            </div>
             <div className={"range-outputs-container"}>
                 <p className={"custom-range-label"}>Price for km </p>
                 <input type="range" className="custom-range" min="1" max="50"
@@ -38,7 +41,7 @@ function MapPage(){
                         To main page
                     </div>
                 </Link>
-                <button  className={"button button-map-page"}onClick={handlePrint}>Export</button>
+                <button  className={"button button-map-page"} onClick={handlePrint}>Export</button>
             </div>
         </div>
     )

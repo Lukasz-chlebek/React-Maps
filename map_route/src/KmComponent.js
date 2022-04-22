@@ -29,26 +29,32 @@ function KmComponent(props){
     }
 
     return(
-        <div className={"flex"}>
-            <div className={"itemContainer"}>
-                <p className={"data-label"}>Length</p>
-                <p className={"data"}>{lengthInKm.toFixed(2)}km</p>
+        <div className={"wrapper"}>
+            <div className={"title-container"}>
+                <p className={"pointLeft"}>{props.props.data.addressA}</p>
+                <p className={"arrow"}>➔</p>
+                <p className={"pointRight"}>{props.props.data.addressB}</p>
             </div>
-            <div className={"itemContainer"}>
-                <p className={"data-label"}>Time</p>
-                <p className={"data"}>{(data.duration/min).toFixed(2)}min</p>
+            <div className={"flex"}>
+                <div className={"itemContainer"}>
+                    <p className={"data-label"}>Length</p>
+                    <p className={"data"}>{lengthInKm.toFixed(2)}km</p>
+                </div>
+                <div className={"itemContainer"}>
+                    <p className={"data-label"}>Time</p>
+                    <p className={"data"}>{(data.duration/min).toFixed(2)}min</p>
+                </div>
+                <div className={"itemContainer"}>
+                    <p className={"data-label"}>Cost</p>
+                    <p className={"data"}>{cost.toFixed(2)}zl</p>
+                </div>
+                <div className={"itemContainer"}>
+                    <p className={"data-label"}>Route takes (days)</p>
+                    <p className={"data"}>{days}</p>
+                </div>
             </div>
-            <div className={"itemContainer"}>
-                <p className={"data-label"}>Cost</p>
-                <p className={"data"}>{cost.toFixed(2)}zl</p>
-            </div>
-            <div className={"itemContainer"}>
-                <p className={"data-label"}>Route takes (days)</p>
-                <p className={"data"}>{days}</p>
-            </div>
-
-
         </div>
+
     )
 }
 

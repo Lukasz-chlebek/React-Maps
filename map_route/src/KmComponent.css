@@ -1,3 +1,9 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
 .flex{
     display: flex;
     margin: 30px 20px 20px 20px;
@@ -22,4 +28,14 @@
 }
 .data-label{
     margin: 10px 0 5px 0;
+}
+.title-container{
+    width: 400px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-radius: 10px;
+    flex-direction: row;
+    margin: 10px 0 ;
 }

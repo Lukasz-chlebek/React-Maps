@@ -30,5 +30,6 @@
 }
 .button-map-page{
     margin: 10px;
-    max-width: 100px;
+    padding: 5px 30px;
+    text-align: center;
 }

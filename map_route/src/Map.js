@@ -17,9 +17,9 @@ export default class Map extends React.Component {
                 'routingMode': 'fast',
                 'transportMode': 'car',
                 // The start point of the route:
-                'origin': this.props.coord.pointACoord,
+                'origin': this.props.props.pointACoord,
                 // The end point of the route:
-                'destination': this.props.coord.pointBCoord,
+                'destination': this.props.props.pointBCoord,
                 // Include the route shape in the response
                 'return': 'polyline'
             };
@@ -45,7 +45,6 @@ export default class Map extends React.Component {
 
             );
             const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-
             onResize(this.ref.current, () => {
                 map.getViewPort().resize();
             });
@@ -59,7 +58,7 @@ export default class Map extends React.Component {
 
                         // Create a polyline to display the route:
                         let routeLine = new H.map.Polyline(linestring, {
-                            style: { strokeColor: 'blue', lineWidth: 3 }
+                            style: { strokeColor: '#1EDE00', lineWidth: 3 }
                         });
 
                         // Create a marker for the start point:
@@ -83,7 +82,9 @@ export default class Map extends React.Component {
                     alert(error.message);
                 });
             var ui = new H.ui.UI.createDefault(map, layer)
-            //ui.getControl("mapsettings").setVisibility(false)
+            ui.getControl("mapsettings").setVisibility(false)
+            ui.getControl("scalebar").setAlignment('top-left')
+            ui.getControl('zoom').setAlignment('top-left');
 
         }
 

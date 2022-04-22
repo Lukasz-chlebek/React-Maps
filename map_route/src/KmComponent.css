@@ -6,7 +6,7 @@
 }
 .flex{
     display: flex;
-    margin: 30px 20px 20px 20px;
+    margin: 10px 20px 10px 20px;
 }
 
 .data{
@@ -31,11 +31,11 @@
 }
 .title-container{
     width: 400px;
-    height: 100px;
+    height: 90px;
     display: flex;
     justify-content: center;
     align-content: center;
     border-radius: 10px;
     flex-direction: row;
-    margin: 10px 0 ;
+    border-bottom: 1px solid black;
 }

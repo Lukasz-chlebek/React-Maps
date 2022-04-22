@@ -8,8 +8,6 @@ import KmComponent from "./KmComponent";
 import "./Range.css"
 import {useReactToPrint} from "react-to-print";
 
-
-
 function MapPage(){
     const [rangeval, setRangeval] = useState(null);
     const location = useLocation()

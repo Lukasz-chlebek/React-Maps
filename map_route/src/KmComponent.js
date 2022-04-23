@@ -26,14 +26,11 @@ function KmComponent(props){
     }else{
         days = Math.ceil(lengthInKm/maxLenPerDay)
     }
-
-    return(
-        <div className={"wrapper"}>
-            <div className={"title-container"}>
-                <p className={"pointLeft"}>{props.props.data.addressA}</p>
-                <p className={"arrow"}>➔</p>
-                <p className={"pointRight"}>{props.props.data.addressB}</p>
-            </div>
+    let Route;
+    if(data.length===undefined){
+        Route = <p className={"noRoute"}>There is no available route!</p>
+    }else{
+        Route=
             <div className={"flex"}>
                 <div className={"itemContainer"}>
                     <p className={"data-label"}>Length</p>
@@ -52,6 +49,16 @@ function KmComponent(props){
                     <p className={"data"}>{days}</p>
                 </div>
             </div>
+    }
+
+    return(
+        <div className={"wrapper"}>
+            <div className={"title-container"}>
+                <p className={"pointLeft"}>{props.props.data.addressA}</p>
+                <p className={"arrow"}>➔</p>
+                <p className={"pointRight"}>{props.props.data.addressB}</p>
+            </div>
+            {Route}
         </div>
     )
 }

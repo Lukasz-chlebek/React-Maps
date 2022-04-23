@@ -1,16 +1,16 @@
-.container-xxl{
+.mapPageContainer{
     display: flex;
     justify-items: center;
     align-items: center;
     flex-direction: column;
 }
-.range-outputs-container{
+.rangeOutputsContainer{
     display: flex;
     justify-items: center;
     align-items: center;
 }
 
-.range-outputs{
+.rangeOutputs{
     width: 110px;
     height: 20px;
     border-radius: 15px;
@@ -21,14 +21,14 @@
     padding: 5px;
 }
 
-.custom-range-label{
+.customRangeLabel{
     margin: 0 10px 0 0;
     text-align: center;
 }
-.buttons-map{
+.buttonMap{
     display: flex;
 }
-.button-map-page{
+.buttonMapPage{
     margin: 10px;
     padding: 5px 30px;
     text-align: center;

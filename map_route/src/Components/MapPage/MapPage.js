@@ -1,11 +1,11 @@
 import "./MapPage.css"
-import "./Range.css"
+import "../../Css/Range.css"
 import {useRef, useState} from "react";
 import {Link, useLocation} from "react-router-dom"
 import {useReactToPrint} from "react-to-print";
-import {DataHistory} from "./DataHistory";
-import Map from "./Map";
-import KmComponent from "./KmComponent";
+import {DataHistory} from "../../Datas/DataHistory";
+import Map from "../Map/Map";
+import RouteInfo from "../RouteInfo/RouteInfo";
 
 function MapPage(){
     const [priceValue, setPriceValue] = useState(null);
@@ -14,31 +14,33 @@ function MapPage(){
     const handlePrint = useReactToPrint({
         content:() => componentRef.current
     })
+    const maxRange = 50
+    const FoundRecord = DataHistory.find(x=> x.idA+x.idB === location.state.idOfTile);
     return(
-        <div className={"container-xxl"} >
+        <div className={"mapPageContainer"} >
             <div ref={componentRef} >
-                <KmComponent props={{data:DataHistory.find(x=> x.idA+x.idB === location.state.idOfTile), rate: priceValue}} />
+                <RouteInfo props={{data: FoundRecord, rate: priceValue}} />
             </div>
-            <div className={"range-outputs-container"}>
-                <p className={"custom-range-label"}>Price for km </p>
+            <div className={"rangeOutputsContainer"}>
+                <p className={"customRangeLabel"}>Price for km</p>
                 <input type="range" className="custom-range" min="1" max="50"
                        onChange={(event) => setPriceValue(event.target.value)} />
             </div>
-            <div className={"range-outputs-container"}>
-                <p className={"range-outputs"}>{priceValue}</p>
+            <div className={"rangeOutputsContainer"}>
+                <p className={"rangeOutputs"}>{priceValue}</p>
                 <p>-</p>
-                <p className={"range-outputs"}>50</p>
+                <p className={"rangeOutputs"}>{maxRange}</p>
             </div>
             <div className={"map"}>
-                <Map props={DataHistory.find(x=> x.idA+x.idB === location.state.idOfTile)}/>
+                <Map props={FoundRecord}/>
             </div>
-            <div className={"buttons-map"}>
+            <div className={"buttonMap"}>
                 <Link to={"/"} style={{ textDecoration: 'none' }}>
-                    <div className={"button button-map-page"}>
+                    <div className={"button buttonMapPage"}>
                         To main page
                     </div>
                 </Link>
-                <button  className={"button button-map-page"} onClick={handlePrint}>Export</button>
+                <button className={"button buttonMapPage"} onClick={handlePrint}>Export</button>
             </div>
         </div>
     )

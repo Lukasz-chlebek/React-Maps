@@ -26,10 +26,10 @@
     align-items: center;
     width: 130px;
 }
-.data-label{
+.dataLabel{
     margin: 10px 0 5px 0;
 }
-.title-container{
+.titleContainer{
     width: 400px;
     height: 90px;
     display: flex;

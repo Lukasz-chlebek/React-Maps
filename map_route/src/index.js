@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './Css/index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import MainPage from "./MainPage";
-import MapPage from "./MapPage";
+import MainPage from "./Components/MainPage/MainPage";
+import MapPage from "./Components/MapPage/MapPage";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

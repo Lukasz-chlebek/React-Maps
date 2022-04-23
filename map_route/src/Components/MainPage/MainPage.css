@@ -18,7 +18,7 @@
     position: absolute;
 }
 
-.point-b{
+.pointB{
     right: 48%;
 }
 
@@ -40,7 +40,7 @@
     font-weight:bold;
     padding:10px 31px;
     text-decoration:none;
-    text-shadow:0px 1px 0px #2f6627;
+    text-shadow:0 1px 0 #2f6627;
 }
 .button:hover {
     background-color:#40821d;

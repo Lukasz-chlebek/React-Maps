@@ -1,13 +1,12 @@
 import "./MainPage.css"
-import { useState} from "react";
-import {Link} from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 import TileHistory from "./TileHistory";
 import {DataHistory} from "./DataHistory";
+import { useNavigate } from 'react-router-dom';
 
 function MainPage(){
-    const [clicked, setClicked]= useState(false)
+    const navigate = useNavigate()
     let Coordinates = {
         addressA:'',
         addressB:'',
@@ -23,12 +22,11 @@ function MainPage(){
     } = useForm();
 
     const onSubmit = (Dataset) => {
-        //replace " " with +
-        Dataset.point_a = Dataset.point_a.replace(/\s+/g, '+');
-        Dataset.point_b = Dataset.point_b.replace(/\s+/g, '+');
+        const addressAwithPlus = Dataset.point_a.replace(/\s+/g, '+');
+        const addressBwithPlus = Dataset.point_b.replace(/\s+/g, '+');
         //urls
-        let origin = `https://geocode.search.hereapi.com/v1/geocode?q=${Dataset.point_a}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
-        let destination = `https://geocode.search.hereapi.com/v1/geocode?q=${Dataset.point_b}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
+        const origin = `https://geocode.search.hereapi.com/v1/geocode?q=${addressAwithPlus}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
+        const destination = `https://geocode.search.hereapi.com/v1/geocode?q=${addressBwithPlus}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
          axios.all([origin, destination].map(async (urls)=> await axios.get(urls)))
             .then(axios.spread((...responses) =>{
                 Coordinates.idA=responses[0].data.items[0].id
@@ -38,20 +36,12 @@ function MainPage(){
                 Coordinates.pointACoord=responses[0].data.items[0].position.lat+","+responses[0].data.items[0].position.lng
                 Coordinates.pointBCoord=responses[1].data.items[0].position.lat+","+responses[1].data.items[0].position.lng
                 DataHistory.push(Coordinates)
-                setClicked(true)
+                navigate("Map",{state:{idOfTile:DataHistory[DataHistory.length-1].idA+DataHistory[DataHistory.length-1].idB}})
             })).catch(err=>{
                 console.log(err)
          })
 
 
-    }
-    let button;
-    if(DataHistory.length!==0 && clicked){
-        button= <Link to={"Map"} state={{idOfTile:DataHistory[DataHistory.length-1].idA+DataHistory[DataHistory.length-1].idB}}>
-                    <input type="submit" className={"button"} value={"Find route"}/>
-                </Link>
-    }else{
-        button=<input type="submit" className={"button"} value={"Find route"}/>
     }
     return (
         <div className={"mainContainer"}>
@@ -60,7 +50,7 @@ function MainPage(){
                 {errors.point_a && <p className={"alert"}>Point A is required</p>}
                 <input placeholder={"Point B"} {...register('point_b', { required: true })}  className={"input"}/>
                 {errors.point_b && <p className={"alert point-b"}>Point B is required</p>}
-                {button}
+                <input type="submit" className={"button"} value={"Find route"}/>
             </form>
             <p className={"title"}>Route history</p>
             {

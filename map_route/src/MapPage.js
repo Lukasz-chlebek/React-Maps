@@ -1,15 +1,14 @@
 import "./MapPage.css"
-import {Link} from "react-router-dom"
-import {useLocation} from 'react-router-dom';
+import "./Range.css"
+import {useRef, useState} from "react";
+import {Link, useLocation} from "react-router-dom"
+import {useReactToPrint} from "react-to-print";
 import {DataHistory} from "./DataHistory";
 import Map from "./Map";
-import {useRef, useState} from "react";
 import KmComponent from "./KmComponent";
-import "./Range.css"
-import {useReactToPrint} from "react-to-print";
 
 function MapPage(){
-    const [rangeval, setRangeval] = useState(null);
+    const [priceValue, setPriceValue] = useState(null);
     const location = useLocation()
     const componentRef = useRef(null)
     const handlePrint = useReactToPrint({
@@ -18,15 +17,15 @@ function MapPage(){
     return(
         <div className={"container-xxl"} >
             <div ref={componentRef} >
-                <KmComponent props={{data:DataHistory.find(x=> x.idA+x.idB === location.state.idOfTile), rate: rangeval}} />
+                <KmComponent props={{data:DataHistory.find(x=> x.idA+x.idB === location.state.idOfTile), rate: priceValue}} />
             </div>
             <div className={"range-outputs-container"}>
                 <p className={"custom-range-label"}>Price for km </p>
                 <input type="range" className="custom-range" min="1" max="50"
-                       onChange={(event) => setRangeval(event.target.value)} />
+                       onChange={(event) => setPriceValue(event.target.value)} />
             </div>
             <div className={"range-outputs-container"}>
-                <p className={"range-outputs"}>{rangeval}</p>
+                <p className={"range-outputs"}>{priceValue}</p>
                 <p>-</p>
                 <p className={"range-outputs"}>50</p>
             </div>

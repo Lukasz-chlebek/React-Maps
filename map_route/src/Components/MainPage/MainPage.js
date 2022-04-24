@@ -5,9 +5,9 @@ import TileHistory from "../TileHistory/TileHistory";
 import {DataHistory} from "../../Datas/DataHistory";
 import { useNavigate } from 'react-router-dom';
 
-function PrepareToGeocode(addresses) {
-    const addressAencoded = encodeURIComponent(addresses.point_a.replace(/\s+/g, '+'))
-    const addressBencoded = encodeURIComponent(addresses.point_b.replace(/\s+/g, '+'))
+export function PrepareToGeocode(addresses) {
+    const addressAencoded = encodeURIComponent(addresses.point_a)
+    const addressBencoded = encodeURIComponent(addresses.point_b)
     return {addressAencoded, addressBencoded};
 }
 

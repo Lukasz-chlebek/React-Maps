@@ -2,8 +2,22 @@ import axios from "axios";
 import {useState} from "react";
 import "./RouteInfo.css"
 
+export function CalculateCostAndDays(data, givenRate) {
+    const kilometer = 1000., sumRate=1.1, maxCostPerDay=1000., maxLenPerDay=800.
+    let cost = (data.length / kilometer) * givenRate * sumRate
+    let lengthInKm = (data.length / kilometer)
+    let days;
+    if (cost / maxCostPerDay > lengthInKm / maxLenPerDay) {
+        days = Math.ceil(cost / maxCostPerDay)
+    } else {
+        days = Math.ceil(lengthInKm / maxLenPerDay)
+    }
+    return {cost, lengthInKm, days};
+}
+
 function RouteInfo(props){
-    const kilometer = 1000, minute=60, sumRate=1.1, maxCostPerDay=1000, maxLenPerDay=800
+    const minute=60
+    const givenRate = props.props.rate
     const [data, setData]= useState({})
     const [state, setState] = useState(true)
     function GetRouteInfo() {
@@ -20,24 +34,13 @@ function RouteInfo(props){
             console.log(e)
         })
     }
+    console.log(data)
 
-    function CalculateCostAndDays() {
-        let cost = (data.length / kilometer) * props.props.rate * sumRate
-        let lengthInKm = (data.length / kilometer)
-        let days;
-        if (cost / maxCostPerDay > lengthInKm / maxLenPerDay) {
-            days = Math.ceil(cost / maxCostPerDay)
-        } else {
-            days = Math.ceil(lengthInKm / maxLenPerDay)
-        }
-        return {cost, lengthInKm, days};
-    }
 
     if(state){
         GetRouteInfo();
     }
-
-    let {cost, lengthInKm, days} = CalculateCostAndDays();
+    let {cost, lengthInKm, days} = CalculateCostAndDays(data, givenRate);
     let Route;
     if(data.length===undefined){
         Route = <p className={"noRoute"}>There is no available route!</p>

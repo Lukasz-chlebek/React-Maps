@@ -1,6 +1,7 @@
 import React from 'react';
 import H from "@here/maps-api-for-javascript";
 import onResize from 'simple-element-resize-detector';
+import {API_KEY} from "../../Datas/ApiKey";
 
 export default class Map extends React.Component {
     constructor(props) {
@@ -48,7 +49,7 @@ export default class Map extends React.Component {
 
     creatMap() {
         const platform = new H.service.Platform({
-            apikey: 'ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM'
+            apikey: API_KEY
         });
         let service = platform.getOMVService({path: 'v2/vectortiles/core/mc'});
         let provider = new H.service.omv.Provider(service,

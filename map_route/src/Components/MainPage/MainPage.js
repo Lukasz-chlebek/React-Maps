@@ -4,6 +4,7 @@ import axios from "axios";
 import TileHistory from "../TileHistory/TileHistory";
 import {DataHistory} from "../../Datas/DataHistory";
 import { useNavigate } from 'react-router-dom';
+import {API_KEY} from "../../Datas/ApiKey";
 
 export function PrepareToGeocode(addresses) {
     const addressAencoded = encodeURIComponent(addresses.point_a)
@@ -22,8 +23,8 @@ function MainPage(){
 
     const onSubmit = (formInputs) => {
         const {addressAencoded, addressBencoded} = PrepareToGeocode(formInputs);
-        const origin = `https://geocode.search.hereapi.com/v1/geocode?q=${addressAencoded}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
-        const destination = `https://geocode.search.hereapi.com/v1/geocode?q=${addressBencoded}&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`
+        const origin = `https://geocode.search.hereapi.com/v1/geocode?q=${addressAencoded}&apiKey=${API_KEY}`
+        const destination = `https://geocode.search.hereapi.com/v1/geocode?q=${addressBencoded}&apiKey=${API_KEY}`
          axios.all([origin, destination].map(async (urls)=> await axios.get(urls)))
             .then(axios.spread((...responses) =>{
                 DataHistory.push({

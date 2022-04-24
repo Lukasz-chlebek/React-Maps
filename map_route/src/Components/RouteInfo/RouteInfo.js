@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useState} from "react";
 import "./RouteInfo.css"
+import {API_KEY} from "../../Datas/ApiKey";
 
 export function CalculateCostAndDays(data, givenRate) {
     const kilometer = 1000., sumRate=1.1, maxCostPerDay=1000., maxLenPerDay=800.
@@ -23,7 +24,7 @@ function RouteInfo(props){
     function GetRouteInfo() {
         const pointACord = props.props.data.pointACoord;
         const pointBCord = props.props.data.pointBCoord;
-        axios.get(`https://router.hereapi.com/v8/routes?transportMode=car&origin=${pointACord}&destination=${pointBCord}&return=summary&apiKey=ZqHI-mJG9L4fEibpuqHBlpvi2ju4FNxBGf-RNe-l1FM`)
+        axios.get(`https://router.hereapi.com/v8/routes?transportMode=car&origin=${pointACord}&destination=${pointBCord}&return=summary&apiKey=${API_KEY}`)
             .then(res => {
                 setData({
                     length: res.data.routes[0].sections[0].summary.length,
